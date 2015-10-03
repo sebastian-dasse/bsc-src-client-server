@@ -29,6 +29,13 @@ object Page {
           `type`:="text/css",
           href:="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
           //href:="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css"
+        ),
+
+        link(
+          rel:="stylesheet",
+          tpe:="text/css",
+          href:="style.css"
+          //href:="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css"
         )
       ),
       body(

@@ -54,16 +54,6 @@ object Server extends SimpleRoutingApp with Api {
       }
     }
   }
-  override def list(path: String): Seq[FileData] = {
-    val (dir, last) = path.splitAt(path.lastIndexOf("/") + 1)
-    val files =
-      Option(new java.io.File("./" + dir).listFiles())
-        .toSeq.flatten
-    for {
-      f <- files
-      if f.getName.startsWith(last)
-    } yield FileData(f.getName, f.length())
-  }
   override def foo(str: String): MyFoo = {
     println(s"server> $str")
     MyFoo(str.toUpperCase, System.currentTimeMillis)
@@ -79,7 +69,7 @@ object Server extends SimpleRoutingApp with Api {
     def containsIngoreCase(other: String) = s.toLowerCase.contains(other.toLowerCase)
   }
 
-  override def friends(searchStr: String): Seq[Friend] = {
+  override def searchFriends(searchStr: String): Seq[Friend] = {
     if (searchStr.isEmpty) Nil
     else friendsList.filter(f =>
       f.firstname.containsIngoreCase(searchStr) ||
@@ -87,10 +77,8 @@ object Server extends SimpleRoutingApp with Api {
     ).take(10)
   }
 
-  override def addFriend(name: String): Boolean = {
-    friendsList = Friend(name, name, "foo@bar.com") :: friendsList
-    true
-  }
+  override def addFriend(friend: Friend): Unit =
+    friendsList = friend :: friendsList
 
   var userList = Seq[User](
     User("Alice", "secret")
