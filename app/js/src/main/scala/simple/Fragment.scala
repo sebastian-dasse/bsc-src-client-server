@@ -6,3 +6,7 @@ trait Fragment {
   val fragName: String
   def render: html.Element
 }
+
+trait Autofocus {
+  def autofocus(): Unit
+}

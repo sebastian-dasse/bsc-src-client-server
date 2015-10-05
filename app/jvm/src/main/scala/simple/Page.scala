@@ -14,40 +14,31 @@ object Page {
   val skeleton =
     html(
       head(
-        //title("Client-Server Base Project"),
+        scalatags.Text.tags2.title("Client-Server Project"),
         meta(httpEquiv:="Content-Type", content:="text/html; charset=UTF-8"),
-        
+
         /* for development */
-        script(`type`:="text/javascript", src:="/client-fastopt.js"),
-//        script(`type`:="text/javascript", src:="/client-fastopt.js.map"),
-        //script(`type`:="text/javascript", src:="//localhost:12345/workbench.js"),
+        script(src:="/client-fastopt.js"),
+//        script(src:="/client-fastopt.js.map"),
+        script(src:="//localhost:12345/workbench.js"),
         
         /* for production */
         // script(src:="/client-opt.js"),
-        
-        link(
-          rel:="stylesheet",
-          `type`:="text/css",
-          href:="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-          //href:="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css"
-        ),
 
-        link(
-          rel:="stylesheet",
-          tpe:="text/css",
-          href:="style.css"
-          //href:="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css"
-        )
+        link(rel:="stylesheet", href:="style.css"),
+        link(rel:="stylesheet", href:="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"),
+        script(src:="https://code.jquery.com/jquery-2.1.4.min.js"),
+        script(src:="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
       ),
       body(
         onload:=boot,
 //        div(
 //          logoutArea
 //        ),
-        div(id:="content"),
+        div(id:="content")//,
 
         /* for development */
-        script(`type`:="text/javascript", src:="//localhost:12345/workbench.js")
+//        script(src:="//localhost:12345/workbench.js")
       )
     )
 
