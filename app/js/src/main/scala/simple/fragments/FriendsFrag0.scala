@@ -19,6 +19,7 @@ object FriendsFrag0 extends Fragment {
       placeholder:="Just start typing..."
     ).render
     val friendsDisplay = tbody.render
+
     def updateFriendsDisplay() = Ajaxer[Api].searchFriends(searchInput.value).call().foreach{ resultingFriends =>
       friendsDisplay.innerHTML = ""
       friendsDisplay.appendChild((

@@ -13,40 +13,26 @@ import scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import simple.fragments._
 
 @JSExport
-//object Client extends Routing {
-//  override val routes = ListMap(
-//    "/" -> HomeFrag,
-//    "/foo" -> FooFrag,
-//    "/bar" -> BarFrag,
-//    "/friends" -> FriendsFrag
-//  )
-//  override val defaultRoute = HomeFrag
-//  override val contentsContainer = div(cls:="container").render
-object Client {
-
-  val routing = new Routing{
-    override val routes = ListMap(
-      "/" -> HomeFrag,
-      "/foo" -> FooFrag,
-      "/bar" -> BarFrag,
-      "/friends0" -> FriendsFrag0,
-      "/friends" -> FriendsFrag
-    )
-    override val defaultRoute = HomeFrag
-    override val contentsContainer = div(cls:="container").render
-  }
+object Client extends Routing { // alternatively: val routing = new Routing{ override ... }
+  override val routes = ListMap(
+    "/" -> HomeFrag,
+    "/foo" -> FooFrag,
+    "/bar" -> BarFrag,
+    "/friends" -> FriendsFrag/*,
+    "/friends0" -> FriendsFrag0*/
+  )
+  override val defaultRoute = HomeFrag
+  override val contentContainer = div(cls:="container").render
 
   @JSExport
   def main(container: html.Div) = {
-//    startRouting()
-    routing.startRouting()
+    startRouting()
 
     val menu =
       nav(cls:="navbar navbar-default navbar-fixed-top",
         div(cls:="container",
           ul(cls:="nav nav-pills nav-justified",
-//            (for ((route, frag) <- routes) yield li(
-            (for ((route, frag) <- routing.routes) yield li(
+            (for ((route, frag) <- routes) yield li(
               a(href := s"#$route", frag.fragName)
             )).toSeq
           )
@@ -56,8 +42,7 @@ object Client {
     container.appendChild(
       div(
         menu,
-//        contentsContainer,
-        routing.contentsContainer,
+        contentContainer,
         footer(cls:="footer",
           div(cls:="container",
             p("© 2015 Sebastian Dassé")
@@ -67,20 +52,8 @@ object Client {
     )
   }
 
-  @JSExport
+  /*@JSExport
   def main2(container: html.Div) = {
-
-    val fooInput = input(
-      placeholder:="your input"
-    ).render
-    val fooOutput = div().render
-    def foo() = Ajaxer[Api].foo(fooInput.value).call().foreach{ data => data match {
-      case MyFoo(contents, time) => fooOutput.textContent = contents + " - " + time
-    }}
-    fooInput.onkeyup = (d: dom.Event) => {
-      println(fooInput.value)
-      foo()
-    }
 
     var loggedin = false
     val loginInput = input.render
@@ -128,16 +101,12 @@ object Client {
       div(
         if (loggedin) logoutArea else loginArea,
         div(cls:="jumbotron",
-          h1("Foo"),
-          fooInput,
-          fooOutput
-        ),
-        div(cls:="jumbotron",
           h1("Login"),
           loginInput,
           loginOutput
         )
       ).render
     )
-  }
+  }*/
+
 }

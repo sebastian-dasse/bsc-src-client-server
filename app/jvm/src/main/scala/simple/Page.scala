@@ -10,7 +10,7 @@ object Page {
 //  val logout =
 //    "simple.Client().logout(document.getElementById('btn-logout'))"
   val boot =
-    "simple.Client().main(document.getElementById('contents'))"
+    "simple.Client().main(document.getElementById('content'))"
   val skeleton =
     html(
       head(
@@ -19,6 +19,7 @@ object Page {
         
         /* for development */
         script(`type`:="text/javascript", src:="/client-fastopt.js"),
+//        script(`type`:="text/javascript", src:="/client-fastopt.js.map"),
         //script(`type`:="text/javascript", src:="//localhost:12345/workbench.js"),
         
         /* for production */
@@ -43,14 +44,14 @@ object Page {
 //        div(
 //          logoutArea
 //        ),
-        div(id:="contents"),
+        div(id:="content"),
 
         /* for development */
         script(`type`:="text/javascript", src:="//localhost:12345/workbench.js")
       )
     )
 
-  val loggedInSkeleton =
+  /*val loggedInSkeleton =
     html(
       head(),
       body(
@@ -62,6 +63,6 @@ object Page {
     if (!Server.loggedin)
       skeleton.render
     else
-      loggedInSkeleton.render
+      loggedInSkeleton.render*/
 
 }

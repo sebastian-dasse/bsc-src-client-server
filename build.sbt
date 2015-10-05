@@ -33,7 +33,7 @@ val app = crossProject.settings(
   jsDependencies in Test += RuntimeDOM,     // to use PhantomJS for tests
 
   /* config for workbench plugin*/
-  bootSnippet := "simple.Client().main(document.getElementById('contents'))",
+  bootSnippet := "simple.Client().main(document.getElementById('content'))",
   //updateBrowsers <<= updateBrowsers.triggeredBy(fastOptJS in Compile)
   refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile)
 ).jvmSettings(

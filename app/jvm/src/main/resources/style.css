@@ -52,4 +52,7 @@ body {
   user-select: none;
   -o-user-select: none;
 }
-
+.error {
+  background: yellow;
+  /*transition: background 1.5s; /!* see: http://www.w3schools.com/css/css3_transitions.asp *!/*/
+}

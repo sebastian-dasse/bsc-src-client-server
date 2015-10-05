@@ -16,23 +16,12 @@ object Server extends SimpleRoutingApp with Api {
     startServer(interface = "localhost", port = 8080) {
       get{
         pathSingleSlash{
-          complete{
+          complete {
             HttpEntity(
               MediaTypes.`text/html`,
-//              Page.skeleton.render
-              if (loggedin) Page.loggedInSkeleton.render else Page.skeleton.render
-//              Page.getPage
-            )
-          }
-        } ~
-          getFromResourceDirectory("")
-      } ~
-      get{
-        path("contents"){
-          complete{
-            HttpEntity(
-              MediaTypes.`text/html`,
-              Page.skeleton.render      // TODO use another page to render
+              Page.skeleton.render
+              /*if (loggedin) Page.loggedInSkeleton.render else Page.skeleton.render
+              Page.getPage*/
             )
           }
         } ~
@@ -54,33 +43,41 @@ object Server extends SimpleRoutingApp with Api {
       }
     }
   }
-  override def foo(str: String): MyFoo = {
-    println(s"server> $str")
-    MyFoo(str.toUpperCase, System.currentTimeMillis)
-  }
 
   var friendsList = List(
     Friend("Alice", "Wonderland", "alice@wonderland.org"),
     Friend("Carla", "Columna", "carla.columna@kiddinx.de"),
-    Friend("Bob", "Martin", "bobby@cleancode.com")
+    Friend("Bob", "Martin", "bobby@cleancode.com"),
+    Friend("Bob", "Geldof", "bobgel@rocks.com"),
+    Friend("Bob", "Hope", "bob.hope@offlimits.com"),
+    Friend("Bob", "Rauschenberg", "bobrausch@eat.com"),
+    Friend("Bob", "Walser", "bob.walser@bureau.ch"),
+    Friend("Bob", "Schumann", "bob.schum@papillons.de"),
+    Friend("Bob", "Blanco", "boblanco@stadl.de"),
+    Friend("Bob", "Koch", "bob.koch@bio.de"),
+    Friend("Bob", "Balboa", "rocky@rocks.com"),
+    Friend("Bob", "Oppenheimer", "bobopp@thebomb.com"),
+    Friend("Bob", "Burns", "bburns@jollybeggars.co.uk"),
+    Friend("Bob", "Bunsen", "bob.bunsen@burns.com")
   )
 
   implicit class CaseInsensitiveString(s: String) {
     def containsIngoreCase(other: String) = s.toLowerCase.contains(other.toLowerCase)
   }
 
-  override def searchFriends(searchStr: String): Seq[Friend] = {
-    if (searchStr.isEmpty) Nil
-    else friendsList.filter(f =>
-      f.firstname.containsIngoreCase(searchStr) ||
-      f.secondname.containsIngoreCase(searchStr)
-    ).take(10)
-  }
+  override def searchFriends(searchStr: String): Seq[Friend] =
+    if (searchStr.isEmpty)
+      Nil
+    else
+      friendsList.filter{ f =>
+        s"${f.firstname} ${f.secondname}".containsIngoreCase(searchStr) || f.email.containsIngoreCase(searchStr)
+      }.sorted.take(10)
 
   override def addFriend(friend: Friend): Unit =
     friendsList = friend :: friendsList
 
-  var userList = Seq[User](
+
+  /*var userList = Seq[User](
     User("Alice", "secret")
   )
   var loggedin = false
@@ -96,5 +93,5 @@ object Server extends SimpleRoutingApp with Api {
   override def logout(): Boolean = {
     loggedin = false
     loggedin
-  }
+  }*/
 }

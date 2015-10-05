@@ -1,5 +1,13 @@
 # Client-Server
 
+TODO: cleanup
+
+- decide for one version of FriendFrag
+- remove dummy-stuff
+- refine or remove login
+- fix or remove RoutingTest
+
+
 ## In development
 
 First run `sbt`.

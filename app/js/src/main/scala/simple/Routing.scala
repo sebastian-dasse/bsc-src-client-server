@@ -4,10 +4,14 @@ import scala.collection.immutable.ListMap
 import org.scalajs.dom
 import org.scalajs.dom.html
 
+/**
+ * Provides client-side routing. Therefore `routes`, `defaultRoute` and
+ * `contentContainer` need to be overridden. Initially call `startRouting()` once.
+ */
 trait Routing {
   val routes: ListMap[String, Fragment] // the routes in insertion order
   val defaultRoute: Fragment
-  val contentsContainer: html.Element
+  val contentContainer: html.Element
 
   private var _route = ""
 
@@ -22,12 +26,16 @@ trait Routing {
     if (frag == defaultRoute) {
       dom.window.location.hash = "#/"
     }
-    contentsContainer.innerHTML = ""
-    contentsContainer.appendChild(frag.render)
+    contentContainer.innerHTML = ""
+    contentContainer.appendChild(frag.render)
   }
-  
-  def startRouting(): Unit = {
+
+  private[this] lazy val _start = {
     dom.setInterval(() => updateRoute(), 100)
     updateRoute()
+  }
+
+  def startRouting(): Unit = {
+    _start
   }
 }
