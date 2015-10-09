@@ -7,10 +7,11 @@ import simple.Fragment
 
 object BarFrag extends Fragment {
   override val fragName = "Bar"
-  override def render = div(cls:="container",
-    div(cls:="page-header",
-      h1(fragName)
-    ),
-    p("some bar stuff")
-  ).render
+  override def render =
+    div(cls:="container",
+      div(cls:="page-header",
+        h1(fragName)
+      ),
+      p("some bar stuff")
+    ).render
 }

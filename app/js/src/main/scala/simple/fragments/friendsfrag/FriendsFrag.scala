@@ -10,9 +10,7 @@ import simple._
 object FriendsFrag extends Fragment {
   override val fragName = "Friends"
 
-  override def render = render1
-
-  def render1 = {
+  override def render = {
     val tabs = Seq(SearchTab, AddTab)
     div(cls:="container",
       div(cls:="page-header",
@@ -21,15 +19,15 @@ object FriendsFrag extends Fragment {
       div(
         nav(
           ul(cls:="nav nav-tabs", "data-tabs".attr:="tabs",
-            (for (tab <- tabs) yield li(
-              cls:=(if (tab == SearchTab) "active" else ""),
-              a(href:=s"#${tab.fragName.toLowerCase}-tab", "data-toggle".attr:="tab", tab.fragName,
-                onclick:={ (evt: dom.Event) =>
-                  evt.preventDefault()
-                  tab.autofocus()
-                }
+            for (tab <- tabs) yield
+              li(cls:=( if (tab == SearchTab) "active" else "" ),
+                a(href:=s"#${tab.fragName.toLowerCase}-tab", "data-toggle".attr:="tab", tab.fragName,
+                  onclick:={ (evt: dom.Event) =>
+                    evt.preventDefault()
+                    tab.autofocus()
+                  }
+                )
               )
-            )).render
           )
         ),
         div(cls:="container tab-content",
@@ -39,7 +37,8 @@ object FriendsFrag extends Fragment {
     ).render
   }
 
-  def render2 = {
+  /// more declarative alternative - closer to html
+  /*override def render = {
     def tabOnclick(a: Autofocus) = (evt: dom.Event) => {
       evt.preventDefault()
       a.autofocus()
@@ -69,5 +68,5 @@ object FriendsFrag extends Fragment {
         )
       )
     ).render
-  }
+  }*/
 }

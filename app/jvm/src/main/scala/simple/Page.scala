@@ -1,6 +1,7 @@
 package simple
 
 import scalatags.Text.all._
+import scalatags.Text.tags2
 
 object Page {
 //  val loginArea = div(/*form(*/)
@@ -14,31 +15,30 @@ object Page {
   val skeleton =
     html(
       head(
-        scalatags.Text.tags2.title("Client-Server Project"),
+        tags2.title("Client-Server Project"),
         meta(httpEquiv:="Content-Type", content:="text/html; charset=UTF-8"),
-
-        /* for development */
-        script(src:="/client-fastopt.js"),
-//        script(src:="/client-fastopt.js.map"),
-        script(src:="//localhost:12345/workbench.js"),
-        
-        /* for production */
-        // script(src:="/client-opt.js"),
 
         link(rel:="stylesheet", href:="style.css"),
         link(rel:="stylesheet", href:="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"),
         script(src:="https://code.jquery.com/jquery-2.1.4.min.js"),
-        script(src:="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+        script(src:="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"),
+
+        /* for development */
+        script(src:="/client-fastopt.js")//,
+//        script(src:="/client-fastopt.js.map"),
+
+        /* for production */
+//         script(src:="/client-opt.js")
       ),
       body(
         onload:=boot,
 //        div(
 //          logoutArea
 //        ),
-        div(id:="content")//,
+        div(id:="content"),
 
         /* for development */
-//        script(src:="//localhost:12345/workbench.js")
+        script(src:="//localhost:12345/workbench.js")
       )
     )
 

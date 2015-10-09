@@ -3,6 +3,7 @@ package simple
 import akka.actor.ActorSystem
 import spray.http.{HttpEntity, MediaTypes}
 import spray.routing.SimpleRoutingApp
+import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Router extends autowire.Server[String, upickle.default.Reader, upickle.default.Writer] {
@@ -44,7 +45,8 @@ object Server extends SimpleRoutingApp with Api {
     }
   }
 
-  var friendsList = List(
+//  var friendsList = List(
+  val friendsList = ListBuffer(
     Friend("Alice", "Wonderland", "alice@wonderland.org"),
     Friend("Carla", "Columna", "carla.columna@kiddinx.de"),
     Friend("Bob", "Martin", "bobby@cleancode.com"),
@@ -74,7 +76,11 @@ object Server extends SimpleRoutingApp with Api {
       }.sorted.take(10)
 
   override def addFriend(friend: Friend): Unit =
-    friendsList = friend :: friendsList
+//    friendsList = friend :: friendsList
+    friendsList += friend
+
+  override def removeFriend(friend: Friend): Unit =
+    friendsList -= friend
 
 
   /*var userList = Seq[User](

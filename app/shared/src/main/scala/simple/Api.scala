@@ -13,6 +13,7 @@ case class Friend(firstname: String, secondname: String, email: String) extends 
 trait Api {
   def searchFriends(searchStr: String): Seq[Friend]
   def addFriend(friend: Friend): Unit
+  def removeFriend(friend: Friend): Unit
   /*def login(user: User): Boolean
   def logout(): Boolean*/
 }

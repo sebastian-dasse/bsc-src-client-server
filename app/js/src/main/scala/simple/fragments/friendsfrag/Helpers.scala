@@ -45,11 +45,10 @@ trait Helpers {
     tpe.split(" ").foreach(item => elm.addEventListener(item, cb))
   }
 
-  def isValidEmail(str: String) = {
-    val validEmail = """\w+@\w+\.\w+""".r
-    str match {
-      case validEmail() => true
-      case _ => false
-    }
+  val validEmail = """\w+@\w+\.\w+""".r
+
+  def isValidEmail(str: String) = str match {
+    case validEmail() => true
+    case _ => false
   }
 }

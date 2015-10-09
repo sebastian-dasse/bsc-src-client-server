@@ -2,7 +2,6 @@ package simple.fragments.friendsfrag
 
 import org.scalajs.dom
 import org.scalajs.dom.html
-import org.scalajs.dom.html._
 import scalatags.JsDom.all._
 import autowire._
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
@@ -24,7 +23,7 @@ object SearchTab extends Fragment with Autofocus with Helpers {
 
   private var impl = new SearchTabImpl
 
-  override def render: Element = {
+  override def render: html.Element = {
     impl = new SearchTabImpl
     impl.render
   }
@@ -35,25 +34,38 @@ object SearchTab extends Fragment with Autofocus with Helpers {
 
   private class SearchTabImpl {
 
-    lazy val searchInput: html.Input = input(tpe:="text", cls:="form-control", placeholder := "Just start typing...",
-      onkeyup:={ (evt: dom.KeyboardEvent) => {
-        clearOnEscape(searchInput)(evt)
-        updateFriendsDisplay()
-      } }
-    ).render
+    lazy val searchInput: html.Input =
+      input(tpe:="text", cls:="form-control", placeholder := "Just start typing...",
+        onkeyup:={ (evt: dom.KeyboardEvent) => {
+          clearOnEscape(searchInput)(evt)
+          updateFriendsDisplay()
+        } }
+      ).render
 
     val friendsDisplay = tbody.render
 
-    def updateFriendsDisplay() = Ajaxer[Api].searchFriends(searchInput.value).call().foreach { friends =>
+    def updateFriendsDisplay(): Unit = Ajaxer[Api].searchFriends(searchInput.value).call().foreach { friends =>
       friendsDisplay.innerHTML = ""
       friendsDisplay.appendChild((
-        for (Friend(firstname, secondname, email) <- friends) yield tr(
-          th(firstname), td(secondname), td(a(href:=s"mailto:$email", email))
-        )
+        for (f <- friends) yield {
+          val deletBtn = button(cls:="hidden btn btn-default btn-xs", "X", onclick:={ () => removeFriend(f) }).render
+          tr(
+            th(f.firstname),
+            td(f.secondname),
+            td(a(href := s"mailto:${f.email}", f.email)),
+            td(deletBtn),
+            onmouseover:={ () => deletBtn.classList.remove("hidden")},
+            onmouseout:={ () => deletBtn.classList.add("hidden")}
+          )
+        }
       ).render)
     }
 
-    def render: Element =
+    def removeFriend(friend: Friend) = Ajaxer[Api].removeFriend(friend).call().foreach{ _ =>
+      updateFriendsDisplay()
+    }
+
+    def render: html.Element =
       div(cls := "tab-pane active", id := "search-tab",
         searchInput,
         div(cls := "container",

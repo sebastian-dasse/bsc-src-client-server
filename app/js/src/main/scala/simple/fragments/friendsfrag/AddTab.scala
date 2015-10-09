@@ -2,19 +2,20 @@ package simple.fragments.friendsfrag
 
 import org.scalajs.dom
 import org.scalajs.dom.ext.KeyCode
-import org.scalajs.dom.html._
+import org.scalajs.dom.html
 import scalatags.JsDom.all._
 import autowire._
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 import simple._
 
+
 object AddTab extends Fragment with Autofocus with Helpers {
   override val fragName: String = "Add"
 
   private var impl = new AddTabImpl
 
-  override def render: Element = {
+  override def render: html.Element = {
     impl = new AddTabImpl
     impl.render
   }
@@ -43,7 +44,7 @@ object AddTab extends Fragment with Autofocus with Helpers {
       }
     }
 
-    def render: Element = {
+    def render: html.Element = {
       val inputs = Seq(
         firstnameInput,
         secondnameInput,

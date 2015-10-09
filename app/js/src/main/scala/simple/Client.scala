@@ -28,9 +28,8 @@ object Client extends Routing { // alternatively use an attribute like this: val
       nav(cls:="navbar navbar-default navbar-fixed-top",
         div(cls:="container",
           ul(cls:="nav nav-pills nav-justified",
-            (for ((route, frag) <- routes) yield li(
-              a(href := s"#$route", frag.fragName)
-            )).toSeq
+            for ((route, frag) <- routes.toSeq) yield
+              li( a(href:=s"#$route", frag.fragName) )
           )
         )
       ).render

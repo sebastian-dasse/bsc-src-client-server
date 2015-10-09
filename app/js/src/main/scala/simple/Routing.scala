@@ -33,6 +33,7 @@ trait Routing {
   private[this] lazy val _start = {
     dom.setInterval(() => updateRoute(), 100)
     updateRoute()
+    dom.console.info("Routing started")
   }
 
   def startRouting(): Unit = {
